@@ -23,8 +23,19 @@ CREATE TABLE IF NOT EXISTS banners (
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
+-- 九宫格图表
+CREATE TABLE IF NOT EXISTS grids (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    title TEXT NOT NULL,
+    image_url TEXT NOT NULL,
+    link_url TEXT,
+    sort_order INTEGER DEFAULT 0,
+    active BOOLEAN DEFAULT 1,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
 -- 插入默认管理员账号 (admin / admin123)
--- 密码通过 SHA-256(username + password) 方式哈希
 INSERT OR IGNORE INTO admins (username, password_hash) VALUES (
     'admin',
     '240be518fabd2724ddb6f04eeb1da5967448d7e831c08c8fa822809f74c720a9'

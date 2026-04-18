@@ -6,6 +6,62 @@
   <title>zuocuo - 不怕做错</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
   <link rel="stylesheet" href="/css/style.css">
+  <style>
+    .grids-section { padding: 48px 24px 64px; }
+    .grids-container { max-width: 1320px; margin: 0 auto; }
+    .grids-title {
+      font-size: 24px;
+      font-weight: 600;
+      color: #181E25;
+      margin-bottom: 32px;
+      text-align: center;
+    }
+    .grids-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    @media (max-width: 768px) {
+      .grids-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
+      .grids-section { padding: 32px 16px 48px; }
+    }
+    .grid-item {
+      background: #fff;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      cursor: pointer;
+      text-decoration: none;
+      color: inherit;
+      display: block;
+    }
+    .grid-item:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px rgba(0,0,0,0.12);
+    }
+    .grid-item img {
+      width: 100%;
+      aspect-ratio: 1;
+      object-fit: cover;
+      display: block;
+    }
+    .grid-item .grid-title {
+      padding: 14px 16px;
+      font-size: 15px;
+      font-weight: 500;
+      color: #181E25;
+      text-align: center;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .grids-loading {
+      text-align: center;
+      color: #86909C;
+      padding: 40px;
+    }
+  </style>
 </head>
 <body>
   <!-- 顶部导航 -->
@@ -29,6 +85,14 @@
           <div class="swiper-pagination"></div>
           <div class="swiper-button-prev"></div>
           <div class="swiper-button-next"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="grids-section">
+      <div class="grids-container">
+        <div class="grids-grid" id="gridsWrapper">
+          <div class="grids-loading">加载中...</div>
         </div>
       </div>
     </section>
@@ -121,6 +185,30 @@
       }
     }
 
+    async function loadGrids() {
+      try {
+        const res = await fetch('/api/grids/list');
+        const data = await res.json();
+        const grids = data.grids || [];
+        const wrapper = document.getElementById('gridsWrapper');
+
+        if (grids.length === 0) {
+          wrapper.innerHTML = '';
+          return;
+        }
+
+        wrapper.innerHTML = grids.map(g => `
+          <a href="${escapeHtml(g.link_url || '#')}" class="grid-item" title="${escapeHtml(g.title)}">
+            <img src="${escapeHtml(g.image_url)}" alt="${escapeHtml(g.title)}" loading="lazy">
+            <div class="grid-title">${escapeHtml(g.title)}</div>
+          </a>
+        `).join('');
+      } catch (err) {
+        console.error('加载九宫格失败:', err);
+        document.getElementById('gridsWrapper').innerHTML = '';
+      }
+    }
+
     function escapeHtml(text) {
       if (!text) return '';
       const div = document.createElement('div');
@@ -129,6 +217,7 @@
     }
 
     loadBanners();
+    loadGrids();
   </script>
 </body>
 </html>

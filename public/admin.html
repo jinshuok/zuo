@@ -8,225 +8,131 @@
   <style>
     .admin-body { background: #f8f9fa; }
     .admin-main { padding: 32px 24px; }
-    .admin-container {
-      max-width: 960px;
-      margin: 0 auto;
-    }
+    .admin-container { max-width: 960px; margin: 0 auto; }
 
     /* 登录卡片 */
     .login-card {
-      max-width: 400px;
-      margin: 80px auto;
-      background: #fff;
-      border-radius: 16px;
-      padding: 40px 32px;
+      max-width: 400px; margin: 80px auto; background: #fff;
+      border-radius: 16px; padding: 40px 32px;
       box-shadow: 0 4px 24px rgba(0,0,0,0.06);
     }
-    .login-title {
-      font-size: 22px;
-      font-weight: 600;
-      text-align: center;
-      margin-bottom: 24px;
-      color: #181E25;
-    }
-    .form-group {
-      margin-bottom: 16px;
-    }
-    .form-label {
-      display: block;
-      font-size: 13px;
-      color: #45515E;
-      margin-bottom: 6px;
-      font-weight: 500;
-    }
+    .login-title { font-size: 22px; font-weight: 600; text-align: center; margin-bottom: 24px; color: #181E25; }
+    .form-group { margin-bottom: 16px; }
+    .form-label { display: block; font-size: 13px; color: #45515E; margin-bottom: 6px; font-weight: 500; }
     .form-input {
-      width: 100%;
-      height: 44px;
-      padding: 0 14px;
-      border: 1px solid #e5e7eb;
-      border-radius: 10px;
-      font-size: 15px;
-      transition: border-color 0.2s;
-      outline: none;
+      width: 100%; height: 44px; padding: 0 14px;
+      border: 1px solid #e5e7eb; border-radius: 10px;
+      font-size: 15px; transition: border-color 0.2s; outline: none;
     }
-    .form-input:focus {
-      border-color: #667eea;
-    }
+    .form-input:focus { border-color: #667eea; }
     .form-btn {
-      width: 100%;
-      height: 44px;
-      background: #181E25;
-      color: #fff;
-      border: none;
-      border-radius: 10px;
-      font-size: 15px;
-      font-weight: 500;
-      cursor: pointer;
-      transition: background 0.2s;
-      margin-top: 8px;
+      width: 100%; height: 44px; background: #181E25; color: #fff;
+      border: none; border-radius: 10px; font-size: 15px; font-weight: 500;
+      cursor: pointer; transition: background 0.2s; margin-top: 8px;
     }
     .form-btn:hover { background: #2a3340; }
     .form-btn:disabled { opacity: 0.6; cursor: not-allowed; }
-    .form-error {
-      color: #ef4444;
-      font-size: 13px;
-      margin-top: 8px;
-      text-align: center;
-    }
+    .form-error { color: #ef4444; font-size: 13px; margin-top: 8px; text-align: center; }
 
     /* 管理面板 */
     .admin-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 24px;
-      flex-wrap: wrap;
-      gap: 12px;
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 24px; flex-wrap: wrap; gap: 12px;
     }
-    .admin-title {
-      font-size: 20px;
-      font-weight: 600;
-    }
-    .admin-actions {
-      display: flex;
-      gap: 12px;
-    }
-    .btn-sm {
-      height: 36px;
-      padding: 0 16px;
-      font-size: 14px;
-      min-width: auto;
-    }
-    .btn-danger {
-      background: #ef4444;
-      color: #fff;
-    }
+    .admin-title { font-size: 20px; font-weight: 600; }
+    .admin-actions { display: flex; gap: 12px; }
+    .btn-sm { height: 36px; padding: 0 16px; font-size: 14px; min-width: auto; }
+    .btn-danger { background: #ef4444; color: #fff; }
     .btn-danger:hover { background: #dc2626; }
-    .btn-ghost {
-      background: transparent;
-      color: #45515E;
-      border: 1px solid #e5e7eb;
-    }
+    .btn-ghost { background: transparent; color: #45515E; border: 1px solid #e5e7eb; }
     .btn-ghost:hover { background: #f5f5f5; }
 
+    /* Tabs */
+    .tabs { display: flex; gap: 4px; margin-bottom: 24px; border-bottom: 1px solid #e5e7eb; }
+    .tab {
+      padding: 10px 20px; font-size: 14px; font-weight: 500;
+      color: #86909C; cursor: pointer; border-bottom: 2px solid transparent;
+      transition: all 0.2s; background: none; border-top: none; border-left: none; border-right: none;
+    }
+    .tab.active { color: #181E25; border-bottom-color: #181E25; }
+    .tab:hover { color: #181E25; }
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+
     /* 列表 */
-    .banner-list {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
+    .item-list { display: flex; flex-direction: column; gap: 12px; }
+    .item-row {
+      background: #fff; border-radius: 12px; padding: 16px 20px;
+      display: flex; align-items: center; gap: 16px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04); transition: box-shadow 0.2s;
     }
-    .banner-item {
-      background: #fff;
-      border-radius: 12px;
-      padding: 16px 20px;
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
-      transition: box-shadow 0.2s;
+    .item-row:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.06); }
+    .item-thumb {
+      width: 80px; height: 56px; border-radius: 8px; object-fit: cover;
+      flex-shrink: 0; background: #f0f0f0;
     }
-    .banner-item:hover {
-      box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+    .item-info { flex: 1; min-width: 0; }
+    .item-info h3 {
+      font-size: 15px; font-weight: 600; color: #181E25;
+      margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
     }
-    .banner-thumb {
-      width: 80px;
-      height: 56px;
-      border-radius: 8px;
-      object-fit: cover;
-      flex-shrink: 0;
-      background: #f0f0f0;
+    .item-info p {
+      font-size: 13px; color: #86909C;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
     }
-    .banner-info {
-      flex: 1;
-      min-width: 0;
-    }
-    .banner-info h3 {
-      font-size: 15px;
-      font-weight: 600;
-      color: #181E25;
-      margin-bottom: 4px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-    .banner-info p {
-      font-size: 13px;
-      color: #86909C;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-    .banner-meta {
-      font-size: 12px;
-      color: #b0b8c4;
-      margin-top: 4px;
-    }
-    .banner-actions {
-      display: flex;
-      gap: 8px;
-      flex-shrink: 0;
-    }
+    .item-meta { font-size: 12px; color: #b0b8c4; margin-top: 4px; }
+    .item-actions { display: flex; gap: 8px; flex-shrink: 0; }
 
     /* 空状态 */
-    .empty-state {
-      text-align: center;
-      padding: 60px 24px;
-      color: #86909C;
-    }
+    .empty-state { text-align: center; padding: 60px 24px; color: #86909C; }
     .empty-state p { margin-bottom: 16px; }
+
+    /* 图片上传 */
+    .image-uploader { margin-bottom: 12px; }
+    .upload-zone {
+      border: 2px dashed #d1d5db; border-radius: 10px; padding: 20px;
+      text-align: center; color: #86909C; font-size: 13px; cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .upload-zone:hover { border-color: #667eea; background: #f9fafb; }
+    .upload-zone.dragover { border-color: #667eea; background: #eef2ff; }
+    .upload-preview { display: flex; align-items: center; gap: 12px; margin-top: 8px; }
+    .upload-preview img {
+      max-width: 120px; max-height: 80px; border-radius: 8px;
+      object-fit: cover; border: 1px solid #e5e7eb;
+    }
+    .upload-preview .remove-btn {
+      font-size: 12px; color: #ef4444; cursor: pointer; background: none; border: none;
+    }
+    .upload-preview .remove-btn:hover { text-decoration: underline; }
 
     /* 模态框 */
     .modal-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.4);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      z-index: 200;
-      padding: 24px;
+      position: fixed; inset: 0; background: rgba(0,0,0,0.4);
+      display: none; align-items: center; justify-content: center;
+      z-index: 200; padding: 24px;
     }
     .modal-overlay.active { display: flex; }
     .modal {
-      background: #fff;
-      border-radius: 16px;
-      width: 100%;
-      max-width: 520px;
-      max-height: 90vh;
-      overflow-y: auto;
-      padding: 28px;
+      background: #fff; border-radius: 16px; width: 100%;
+      max-width: 520px; max-height: 90vh; overflow-y: auto; padding: 28px;
     }
     .modal-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 20px;
+      display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;
     }
-    .modal-title {
-      font-size: 18px;
-      font-weight: 600;
-    }
+    .modal-title { font-size: 18px; font-weight: 600; }
     .modal-close {
-      width: 32px;
-      height: 32px;
-      border-radius: 8px;
-      border: none;
-      background: #f5f5f5;
-      cursor: pointer;
-      font-size: 18px;
-      line-height: 1;
-      color: #45515E;
+      width: 32px; height: 32px; border-radius: 8px; border: none;
+      background: #f5f5f5; cursor: pointer; font-size: 18px;
+      line-height: 1; color: #45515E;
     }
     .modal-close:hover { background: #e5e7eb; }
-    .form-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-    }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
     @media (max-width: 640px) {
       .form-row { grid-template-columns: 1fr; }
-      .banner-item { flex-direction: column; align-items: flex-start; }
-      .banner-thumb { width: 100%; height: 120px; }
+      .item-row { flex-direction: column; align-items: flex-start; }
+      .item-thumb { width: 100%; height: 120px; }
+      .admin-actions { flex-wrap: wrap; }
     }
   </style>
 </head>
@@ -246,7 +152,7 @@
         <form id="loginForm">
           <div class="form-group">
             <label class="form-label">用户名</label>
-            <input type="text" id="username" class="form-input" placeholder="admin" required>
+            <input type="text" id="username" class="form-input" required>
           </div>
           <div class="form-group">
             <label class="form-label">密码</label>
@@ -261,26 +167,45 @@
     <!-- 管理面板 -->
     <div id="adminSection" class="admin-container" style="display:none;">
       <div class="admin-header">
-        <h2 class="admin-title">轮播图管理</h2>
+        <h2 class="admin-title">内容管理</h2>
         <div class="admin-actions">
-          <button class="btn btn-primary btn-sm" onclick="openModal()">+ 新增轮播图</button>
           <button class="btn btn-ghost btn-sm" onclick="openPasswordModal()">修改密码</button>
           <button class="btn btn-ghost btn-sm" onclick="logout()">退出</button>
         </div>
       </div>
-      <div id="bannerList" class="banner-list"></div>
+
+      <div class="tabs">
+        <button class="tab active" onclick="switchTab('banners')">轮播图</button>
+        <button class="tab" onclick="switchTab('grids')">九宫格</button>
+      </div>
+
+      <!-- 轮播图面板 -->
+      <div id="tab-banners" class="tab-panel active">
+        <div style="display:flex; justify-content:flex-end; margin-bottom:16px;">
+          <button class="btn btn-primary btn-sm" onclick="openBannerModal()">+ 新增轮播图</button>
+        </div>
+        <div id="bannerList" class="item-list"></div>
+      </div>
+
+      <!-- 九宫格面板 -->
+      <div id="tab-grids" class="tab-panel">
+        <div style="display:flex; justify-content:flex-end; margin-bottom:16px;">
+          <button class="btn btn-primary btn-sm" onclick="openGridModal()">+ 新增九宫格</button>
+        </div>
+        <div id="gridList" class="item-list"></div>
+      </div>
     </div>
   </main>
 
-  <!-- 编辑模态框 -->
-  <div class="modal-overlay" id="modal">
+  <!-- 轮播图模态框 -->
+  <div class="modal-overlay" id="bannerModal">
     <div class="modal">
       <div class="modal-header">
-        <h3 class="modal-title" id="modalTitle">新增轮播图</h3>
-        <button class="modal-close" onclick="closeModal()">&times;</button>
+        <h3 class="modal-title" id="bannerModalTitle">新增轮播图</h3>
+        <button class="modal-close" onclick="closeBannerModal()">&times;</button>
       </div>
       <form id="bannerForm">
-        <input type="hidden" id="editId">
+        <input type="hidden" id="bannerEditId">
         <div class="form-group">
           <label class="form-label">标题 *</label>
           <input type="text" id="bTitle" class="form-input" required>
@@ -290,8 +215,19 @@
           <input type="text" id="bSubtitle" class="form-input">
         </div>
         <div class="form-group">
-          <label class="form-label">图片链接 *</label>
-          <input type="url" id="bImage" class="form-input" placeholder="https://example.com/image.jpg" required>
+          <label class="form-label">图片 *</label>
+          <div class="image-uploader" id="bannerUploader">
+            <div class="upload-zone" id="bannerZone">
+              <div>点击选择、粘贴或拖拽图片</div>
+              <div style="font-size:12px;color:#b0b8c4;margin-top:4px">支持 Ctrl+V 粘贴截图</div>
+              <input type="file" id="bannerFile" accept="image/*" style="display:none">
+            </div>
+            <div class="upload-preview" id="bannerPreview" style="display:none">
+              <img src="" alt="" id="bannerPreviewImg">
+              <button type="button" class="remove-btn" onclick="clearBannerUpload()">移除</button>
+            </div>
+          </div>
+          <input type="hidden" id="bImage" required>
         </div>
         <div class="form-row">
           <div class="form-group">
@@ -320,8 +256,59 @@
             </select>
           </div>
         </div>
-        <button type="submit" class="form-btn" id="saveBtn">保存</button>
-        <div class="form-error" id="formError"></div>
+        <button type="submit" class="form-btn" id="bannerSaveBtn">保存</button>
+        <div class="form-error" id="bannerFormError"></div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 九宫格模态框 -->
+  <div class="modal-overlay" id="gridModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 class="modal-title" id="gridModalTitle">新增九宫格</h3>
+        <button class="modal-close" onclick="closeGridModal()">&times;</button>
+      </div>
+      <form id="gridForm">
+        <input type="hidden" id="gridEditId">
+        <div class="form-group">
+          <label class="form-label">标题 *</label>
+          <input type="text" id="gTitle" class="form-input" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">图片 *</label>
+          <div class="image-uploader" id="gridUploader">
+            <div class="upload-zone" id="gridZone">
+              <div>点击选择、粘贴或拖拽图片</div>
+              <div style="font-size:12px;color:#b0b8c4;margin-top:4px">支持 Ctrl+V 粘贴截图</div>
+              <input type="file" id="gridFile" accept="image/*" style="display:none">
+            </div>
+            <div class="upload-preview" id="gridPreview" style="display:none">
+              <img src="" alt="" id="gridPreviewImg">
+              <button type="button" class="remove-btn" onclick="clearGridUpload()">移除</button>
+            </div>
+          </div>
+          <input type="hidden" id="gImage" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">链接</label>
+          <input type="url" id="gLink" class="form-input" placeholder="https://">
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">排序</label>
+            <input type="number" id="gOrder" class="form-input" value="0">
+          </div>
+          <div class="form-group">
+            <label class="form-label">状态</label>
+            <select id="gActive" class="form-input" style="appearance:auto; padding-right:10px;">
+              <option value="1">启用</option>
+              <option value="0">禁用</option>
+            </select>
+          </div>
+        </div>
+        <button type="submit" class="form-btn" id="gridSaveBtn">保存</button>
+        <div class="form-error" id="gridFormError"></div>
       </form>
     </div>
   </div>
@@ -356,12 +343,7 @@
     const API_BASE = '';
     let token = localStorage.getItem('admin_token');
 
-    // 检查登录状态
-    if (token) {
-      showAdmin();
-    } else {
-      showLogin();
-    }
+    if (token) { showAdmin(); } else { showLogin(); }
 
     function showLogin() {
       document.getElementById('loginSection').style.display = 'block';
@@ -372,6 +354,14 @@
       document.getElementById('loginSection').style.display = 'none';
       document.getElementById('adminSection').style.display = 'block';
       loadBannerList();
+      loadGridList();
+    }
+
+    function switchTab(name) {
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+      event.target.classList.add('active');
+      document.getElementById('tab-' + name).classList.add('active');
     }
 
     // 登录
@@ -379,187 +369,167 @@
       e.preventDefault();
       const btn = document.getElementById('loginBtn');
       const errEl = document.getElementById('loginError');
-      btn.disabled = true;
-      errEl.textContent = '';
-
+      btn.disabled = true; errEl.textContent = '';
       try {
         const res = await fetch(`${API_BASE}/api/auth/login`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            username: document.getElementById('username').value,
-            password: document.getElementById('password').value
-          })
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ username: document.getElementById('username').value, password: document.getElementById('password').value })
         });
         const data = await res.json();
-        if (data.success) {
-          token = data.token;
-          localStorage.setItem('admin_token', token);
-          showAdmin();
-        } else {
-          errEl.textContent = data.error || '登录失败';
+        if (data.success) { token = data.token; localStorage.setItem('admin_token', token); showAdmin(); }
+        else { errEl.textContent = data.error || '登录失败'; }
+      } catch (err) { errEl.textContent = '网络错误'; }
+      finally { btn.disabled = false; }
+    });
+
+    function logout() { token = null; localStorage.removeItem('admin_token'); showLogin(); }
+
+    // ==================== 图片上传组件 ====================
+    function setupUploader(zoneId, fileId, previewId, previewImgId, hiddenId, clearFn) {
+      const zone = document.getElementById(zoneId);
+      const fileInput = document.getElementById(fileId);
+      const preview = document.getElementById(previewId);
+      const previewImg = document.getElementById(previewImgId);
+      const hidden = document.getElementById(hiddenId);
+
+      zone.addEventListener('click', () => fileInput.click());
+
+      fileInput.addEventListener('change', async (e) => {
+        const file = e.target.files[0];
+        if (file) await handleFile(file, preview, previewImg, hidden, zone);
+      });
+
+      zone.addEventListener('dragover', (e) => { e.preventDefault(); zone.classList.add('dragover'); });
+      zone.addEventListener('dragleave', () => zone.classList.remove('dragover'));
+      zone.addEventListener('drop', async (e) => {
+        e.preventDefault(); zone.classList.remove('dragover');
+        const file = e.dataTransfer.files[0];
+        if (file && file.type.startsWith('image/')) await handleFile(file, preview, previewImg, hidden, zone);
+      });
+
+      // 全局粘贴支持（当模态框打开时）
+      document.addEventListener('paste', async (e) => {
+        if (hidden.closest('.modal-overlay').style.display === 'none') return;
+        const items = e.clipboardData.items;
+        for (let item of items) {
+          if (item.type.startsWith('image/')) {
+            const file = item.getAsFile();
+            await handleFile(file, preview, previewImg, hidden, zone);
+            break;
+          }
         }
-      } catch (err) {
-        errEl.textContent = '网络错误';
-      } finally {
-        btn.disabled = false;
-      }
-    });
-
-    function logout() {
-      token = null;
-      localStorage.removeItem('admin_token');
-      showLogin();
+      });
     }
 
-    // 修改密码模态框
-    function openPasswordModal() {
-      document.getElementById('passwordForm').reset();
-      document.getElementById('pwdFormError').textContent = '';
-      document.getElementById('pwdModal').classList.add('active');
+    async function handleFile(file, previewEl, imgEl, hiddenEl, zoneEl) {
+      if (!file || !file.type.startsWith('image/')) return;
+      const base64 = await compressImage(file, 1920, 0.85);
+      hiddenEl.value = base64;
+      imgEl.src = base64;
+      previewEl.style.display = 'flex';
+      zoneEl.style.display = 'none';
     }
 
-    function closePasswordModal() {
-      document.getElementById('pwdModal').classList.remove('active');
+    function clearUpload(previewId, zoneId, hiddenId, fileId) {
+      document.getElementById(previewId).style.display = 'none';
+      document.getElementById(zoneId).style.display = 'block';
+      document.getElementById(hiddenId).value = '';
+      document.getElementById(fileId).value = '';
     }
 
-    document.getElementById('passwordForm').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const btn = document.getElementById('pwdSaveBtn');
-      const errEl = document.getElementById('pwdFormError');
-      btn.disabled = true;
-      errEl.textContent = '';
+    async function compressImage(file, maxWidth = 1920, quality = 0.85) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          const img = new Image();
+          img.onload = () => {
+            let { width, height } = img;
+            if (width > maxWidth) { height = Math.round(height * maxWidth / width); width = maxWidth; }
+            const canvas = document.createElement('canvas');
+            canvas.width = width; canvas.height = height;
+            const ctx = canvas.getContext('2d');
+            ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, width, height);
+            ctx.drawImage(img, 0, 0, width, height);
+            resolve(canvas.toDataURL('image/jpeg', quality));
+          };
+          img.onerror = reject;
+          img.src = e.target.result;
+        };
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+      });
+    }
 
-      const newPwd = document.getElementById('newPwd').value;
-      const confirmPwd = document.getElementById('confirmPwd').value;
+    setupUploader('bannerZone', 'bannerFile', 'bannerPreview', 'bannerPreviewImg', 'bImage', clearBannerUpload);
+    setupUploader('gridZone', 'gridFile', 'gridPreview', 'gridPreviewImg', 'gImage', clearGridUpload);
 
-      if (newPwd !== confirmPwd) {
-        errEl.textContent = '两次输入的新密码不一致';
-        btn.disabled = false;
-        return;
-      }
+    function clearBannerUpload() { clearUpload('bannerPreview', 'bannerZone', 'bImage', 'bannerFile'); }
+    function clearGridUpload() { clearUpload('gridPreview', 'gridZone', 'gImage', 'gridFile'); }
 
-      try {
-        const res = await fetch(`${API_BASE}/api/auth/password`, {
-          method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`
-          },
-          body: JSON.stringify({
-            oldPassword: document.getElementById('oldPwd').value,
-            newPassword: newPwd
-          })
-        });
-        const data = await res.json();
-        if (data.success) {
-          closePasswordModal();
-          alert('密码修改成功，请重新登录');
-          logout();
-        } else {
-          errEl.textContent = data.error || '修改失败';
-        }
-      } catch (err) {
-        errEl.textContent = '网络错误';
-      } finally {
-        btn.disabled = false;
-      }
-    });
-
-    // 点击遮罩关闭密码模态框
-    document.getElementById('pwdModal').addEventListener('click', (e) => {
-      if (e.target === document.getElementById('pwdModal')) closePasswordModal();
-    });
-
-    // 加载列表
+    // ==================== 轮播图管理 ====================
     async function loadBannerList() {
       const container = document.getElementById('bannerList');
       container.innerHTML = '<div class="empty-state"><p>加载中...</p></div>';
-
       try {
-        const res = await fetch(`${API_BASE}/api/banners/list`, {
-          headers: { 'Authorization': `Bearer ${token}` }
-        });
+        const res = await fetch(`${API_BASE}/api/banners/list`, { headers: { 'Authorization': `Bearer ${token}` } });
         const data = await res.json();
-        const allBanners = data.banners || [];
-
-        if (allBanners.length === 0) {
-          container.innerHTML = `
-            <div class="empty-state">
-              <p>暂无轮播图</p>
-              <button class="btn btn-primary" onclick="openModal()">添加第一张</button>
-            </div>
-          `;
-          return;
-        }
-
-        container.innerHTML = allBanners.map(b => `
-          <div class="banner-item">
-            <img src="${escapeHtml(b.image_url)}" class="banner-thumb" alt="" onerror="this.style.display='none'">
-            <div class="banner-info">
+        const items = data.banners || [];
+        if (items.length === 0) { container.innerHTML = '<div class="empty-state"><p>暂无轮播图</p></div>'; return; }
+        container.innerHTML = items.map(b => `
+          <div class="item-row">
+            <img src="${escapeHtml(b.image_url)}" class="item-thumb" alt="" onerror="this.style.display='none'">
+            <div class="item-info">
               <h3>${escapeHtml(b.title)}</h3>
               <p>${escapeHtml(b.subtitle || '无副标题')}</p>
-              <div class="banner-meta">排序: ${b.sort_order} | ${b.active ? '启用' : '禁用'}</div>
+              <div class="item-meta">排序: ${b.sort_order} | ${b.active ? '启用' : '禁用'}</div>
             </div>
-            <div class="banner-actions">
+            <div class="item-actions">
               <button class="btn btn-ghost btn-sm" onclick='editBanner(${JSON.stringify(b).replace(/'/g, "&#39;")})'>编辑</button>
               <button class="btn btn-danger btn-sm" onclick="deleteBanner(${b.id})">删除</button>
             </div>
           </div>
         `).join('');
-      } catch (err) {
-        container.innerHTML = '<div class="empty-state"><p>加载失败</p></div>';
-      }
+      } catch (err) { container.innerHTML = '<div class="empty-state"><p>加载失败</p></div>'; }
     }
 
-    async function authFetch(url, opts = {}) {
-      return fetch(url, {
-        ...opts,
-        headers: {
-          ...opts.headers,
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json'
-        }
-      }).then(r => r.json());
-    }
-
-    // 模态框
-    function openModal() {
-      document.getElementById('modalTitle').textContent = '新增轮播图';
-      document.getElementById('editId').value = '';
+    function openBannerModal() {
+      document.getElementById('bannerModalTitle').textContent = '新增轮播图';
+      document.getElementById('bannerEditId').value = '';
       document.getElementById('bannerForm').reset();
+      clearBannerUpload();
       document.getElementById('bActive').value = '1';
-      document.getElementById('formError').textContent = '';
-      document.getElementById('modal').classList.add('active');
+      document.getElementById('bannerFormError').textContent = '';
+      document.getElementById('bannerModal').classList.add('active');
     }
 
-    function closeModal() {
-      document.getElementById('modal').classList.remove('active');
-    }
+    function closeBannerModal() { document.getElementById('bannerModal').classList.remove('active'); }
 
     function editBanner(banner) {
-      document.getElementById('modalTitle').textContent = '编辑轮播图';
-      document.getElementById('editId').value = banner.id;
+      document.getElementById('bannerModalTitle').textContent = '编辑轮播图';
+      document.getElementById('bannerEditId').value = banner.id;
       document.getElementById('bTitle').value = banner.title || '';
       document.getElementById('bSubtitle').value = banner.subtitle || '';
-      document.getElementById('bImage').value = banner.image_url || '';
       document.getElementById('bBtnText').value = banner.btn_text || '了解更多';
       document.getElementById('bBtnLink').value = banner.btn_link || '';
       document.getElementById('bLink').value = banner.link_url || '';
       document.getElementById('bOrder').value = banner.sort_order ?? 0;
       document.getElementById('bActive').value = banner.active ?? 1;
-      document.getElementById('formError').textContent = '';
-      document.getElementById('modal').classList.add('active');
+      document.getElementById('bannerFormError').textContent = '';
+      // 图片处理
+      if (banner.image_url) {
+        document.getElementById('bImage').value = banner.image_url;
+        document.getElementById('bannerPreviewImg').src = banner.image_url;
+        document.getElementById('bannerPreview').style.display = 'flex';
+        document.getElementById('bannerZone').style.display = 'none';
+      } else { clearBannerUpload(); }
+      document.getElementById('bannerModal').classList.add('active');
     }
 
-    // 保存
     document.getElementById('bannerForm').addEventListener('submit', async (e) => {
       e.preventDefault();
-      const btn = document.getElementById('saveBtn');
-      const errEl = document.getElementById('formError');
-      btn.disabled = true;
-      errEl.textContent = '';
-
+      const btn = document.getElementById('bannerSaveBtn');
+      const errEl = document.getElementById('bannerFormError');
+      btn.disabled = true; errEl.textContent = '';
       const payload = {
         title: document.getElementById('bTitle').value,
         subtitle: document.getElementById('bSubtitle').value,
@@ -570,51 +540,147 @@
         sort_order: parseInt(document.getElementById('bOrder').value) || 0,
         active: parseInt(document.getElementById('bActive').value)
       };
-
-      const id = document.getElementById('editId').value;
+      const id = document.getElementById('bannerEditId').value;
       const url = id ? `${API_BASE}/api/banners/${id}` : `${API_BASE}/api/banners/create`;
       const method = id ? 'PUT' : 'POST';
-
       try {
-        const res = await fetch(url, {
-          method,
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`
-          },
-          body: JSON.stringify(payload)
-        });
+        const res = await fetch(url, { method, headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` }, body: JSON.stringify(payload) });
         const data = await res.json();
-        if (data.success) {
-          closeModal();
-          loadBannerList();
-        } else {
-          errEl.textContent = data.error || '保存失败';
-        }
-      } catch (err) {
-        errEl.textContent = '网络错误';
-      } finally {
-        btn.disabled = false;
-      }
+        if (data.success) { closeBannerModal(); loadBannerList(); }
+        else { errEl.textContent = data.error || '保存失败'; }
+      } catch (err) { errEl.textContent = '网络错误'; }
+      finally { btn.disabled = false; }
     });
 
     async function deleteBanner(id) {
-      if (!confirm('确定删除这张轮播图吗？')) return;
+      if (!confirm('确定删除吗？')) return;
       try {
-        const res = await fetch(`${API_BASE}/api/banners/${id}`, {
-          method: 'DELETE',
-          headers: { 'Authorization': `Bearer ${token}` }
+        const res = await fetch(`${API_BASE}/api/banners/${id}`, { method: 'DELETE', headers: { 'Authorization': `Bearer ${token}` } });
+        const data = await res.json();
+        if (data.success) loadBannerList(); else alert(data.error || '删除失败');
+      } catch (err) { alert('网络错误'); }
+    }
+
+    // ==================== 九宫格管理 ====================
+    async function loadGridList() {
+      const container = document.getElementById('gridList');
+      container.innerHTML = '<div class="empty-state"><p>加载中...</p></div>';
+      try {
+        const res = await fetch(`${API_BASE}/api/grids/list`, { headers: { 'Authorization': `Bearer ${token}` } });
+        const data = await res.json();
+        const items = data.grids || [];
+        if (items.length === 0) { container.innerHTML = '<div class="empty-state"><p>暂无九宫格</p></div>'; return; }
+        container.innerHTML = items.map(g => `
+          <div class="item-row">
+            <img src="${escapeHtml(g.image_url)}" class="item-thumb" alt="" onerror="this.style.display='none'" style="aspect-ratio:1;object-fit:cover;">
+            <div class="item-info">
+              <h3>${escapeHtml(g.title)}</h3>
+              <p>${escapeHtml(g.link_url || '无链接')}</p>
+              <div class="item-meta">排序: ${g.sort_order} | ${g.active ? '启用' : '禁用'}</div>
+            </div>
+            <div class="item-actions">
+              <button class="btn btn-ghost btn-sm" onclick='editGrid(${JSON.stringify(g).replace(/'/g, "&#39;")})'>编辑</button>
+              <button class="btn btn-danger btn-sm" onclick="deleteGrid(${g.id})">删除</button>
+            </div>
+          </div>
+        `).join('');
+      } catch (err) { container.innerHTML = '<div class="empty-state"><p>加载失败</p></div>'; }
+    }
+
+    function openGridModal() {
+      document.getElementById('gridModalTitle').textContent = '新增九宫格';
+      document.getElementById('gridEditId').value = '';
+      document.getElementById('gridForm').reset();
+      clearGridUpload();
+      document.getElementById('gActive').value = '1';
+      document.getElementById('gridFormError').textContent = '';
+      document.getElementById('gridModal').classList.add('active');
+    }
+
+    function closeGridModal() { document.getElementById('gridModal').classList.remove('active'); }
+
+    function editGrid(grid) {
+      document.getElementById('gridModalTitle').textContent = '编辑九宫格';
+      document.getElementById('gridEditId').value = grid.id;
+      document.getElementById('gTitle').value = grid.title || '';
+      document.getElementById('gLink').value = grid.link_url || '';
+      document.getElementById('gOrder').value = grid.sort_order ?? 0;
+      document.getElementById('gActive').value = grid.active ?? 1;
+      document.getElementById('gridFormError').textContent = '';
+      if (grid.image_url) {
+        document.getElementById('gImage').value = grid.image_url;
+        document.getElementById('gridPreviewImg').src = grid.image_url;
+        document.getElementById('gridPreview').style.display = 'flex';
+        document.getElementById('gridZone').style.display = 'none';
+      } else { clearGridUpload(); }
+      document.getElementById('gridModal').classList.add('active');
+    }
+
+    document.getElementById('gridForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const btn = document.getElementById('gridSaveBtn');
+      const errEl = document.getElementById('gridFormError');
+      btn.disabled = true; errEl.textContent = '';
+      const payload = {
+        title: document.getElementById('gTitle').value,
+        image_url: document.getElementById('gImage').value,
+        link_url: document.getElementById('gLink').value,
+        sort_order: parseInt(document.getElementById('gOrder').value) || 0,
+        active: parseInt(document.getElementById('gActive').value)
+      };
+      const id = document.getElementById('gridEditId').value;
+      const url = id ? `${API_BASE}/api/grids/${id}` : `${API_BASE}/api/grids/create`;
+      const method = id ? 'PUT' : 'POST';
+      try {
+        const res = await fetch(url, { method, headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` }, body: JSON.stringify(payload) });
+        const data = await res.json();
+        if (data.success) { closeGridModal(); loadGridList(); }
+        else { errEl.textContent = data.error || '保存失败'; }
+      } catch (err) { errEl.textContent = '网络错误'; }
+      finally { btn.disabled = false; }
+    });
+
+    async function deleteGrid(id) {
+      if (!confirm('确定删除吗？')) return;
+      try {
+        const res = await fetch(`${API_BASE}/api/grids/${id}`, { method: 'DELETE', headers: { 'Authorization': `Bearer ${token}` } });
+        const data = await res.json();
+        if (data.success) loadGridList(); else alert(data.error || '删除失败');
+      } catch (err) { alert('网络错误'); }
+    }
+
+    // ==================== 修改密码 ====================
+    function openPasswordModal() {
+      document.getElementById('passwordForm').reset();
+      document.getElementById('pwdFormError').textContent = '';
+      document.getElementById('pwdModal').classList.add('active');
+    }
+    function closePasswordModal() { document.getElementById('pwdModal').classList.remove('active'); }
+
+    document.getElementById('passwordForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const btn = document.getElementById('pwdSaveBtn');
+      const errEl = document.getElementById('pwdFormError');
+      btn.disabled = true; errEl.textContent = '';
+      const newPwd = document.getElementById('newPwd').value;
+      const confirmPwd = document.getElementById('confirmPwd').value;
+      if (newPwd !== confirmPwd) { errEl.textContent = '两次输入的新密码不一致'; btn.disabled = false; return; }
+      try {
+        const res = await fetch(`${API_BASE}/api/auth/password`, {
+          method: 'PUT', headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+          body: JSON.stringify({ oldPassword: document.getElementById('oldPwd').value, newPassword: newPwd })
         });
         const data = await res.json();
-        if (data.success) {
-          loadBannerList();
-        } else {
-          alert(data.error || '删除失败');
-        }
-      } catch (err) {
-        alert('网络错误');
-      }
-    }
+        if (data.success) { closePasswordModal(); alert('密码修改成功，请重新登录'); logout(); }
+        else { errEl.textContent = data.error || '修改失败'; }
+      } catch (err) { errEl.textContent = '网络错误'; }
+      finally { btn.disabled = false; }
+    });
+
+    // 点击遮罩关闭
+    document.querySelectorAll('.modal-overlay').forEach(overlay => {
+      overlay.addEventListener('click', (e) => { if (e.target === overlay) overlay.classList.remove('active'); });
+    });
 
     function escapeHtml(text) {
       if (!text) return '';
@@ -622,11 +688,6 @@
       div.textContent = text;
       return div.innerHTML;
     }
-
-    // 点击遮罩关闭
-    document.getElementById('modal').addEventListener('click', (e) => {
-      if (e.target === document.getElementById('modal')) closeModal();
-    });
   </script>
 </body>
 </html>
