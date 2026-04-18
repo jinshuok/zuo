@@ -6,7 +6,6 @@ pages_build_output_dir = "public"
 [[d1_databases]]
 binding = "DB"
 database_name = "zuocuo-db"
-database_id = "your-database-id-here"
+database_id = "7adcbeb1-a920-47e9-86f3-5fe4544b8859"
 
-[vars]
-JWT_SECRET = "zuocuo-secret-key-change-in-production"
+# JWT_SECRET 已通过 wrangler pages secret put 设置，请勿在此重复定义
