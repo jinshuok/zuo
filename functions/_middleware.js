@@ -102,10 +102,12 @@ export async function onRequest(context) {
     // 静态文件不需要认证
     const pathname = url.pathname;
     if (pathname === '/' || 
+        pathname === '/admin' ||
         pathname.endsWith('.html') || 
         pathname.endsWith('.css') || 
         pathname.endsWith('.js') ||
-        pathname.startsWith('/assets/')) {
+        pathname.startsWith('/assets/') ||
+        pathname.startsWith('/css/')) {
         return next();
     }
     
