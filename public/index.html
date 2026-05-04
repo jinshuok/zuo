@@ -78,84 +78,196 @@
       bottom: 0;
       left: 0;
       right: 0;
-      height: 70%;
+      height: 78%;
       overflow: visible;
       user-select: none;
     }
-    .wheel-track {
+    .wheel-viewport {
       position: relative;
       width: 100%;
       height: 100%;
       perspective: 1200px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
-    .wheel-item {
+    .wheel-track {
+      position: relative;
+      width: 0;
+      height: 0;
+      transform-style: preserve-3d;
+    }
+    .wheel-card {
       position: absolute;
-      width: 170px;
-      height: 230px;
+      width: 190px;
+      height: 250px;
       left: 50%;
       top: 50%;
-      margin-left: -85px;
-      margin-top: -115px;
-      transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1),
-                  opacity 0.4s ease,
-                  z-index 0s;
-      will-change: transform, opacity;
-    }
-    .wheel-item-inner {
-      width: 100%;
-      height: 100%;
-      border-radius: 16px;
+      margin-left: -95px;
+      margin-top: -125px;
+      border-radius: 18px;
       overflow: hidden;
-      background: #c7b0fe;
-      box-shadow: 0 8px 32px rgba(0,0,0,0.18);
-      position: relative;
+      background: linear-gradient(180deg, rgba(255,255,255,0.95) 0%, rgba(245,245,255,0.92) 100%);
+      box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+      transition: all 0.55s cubic-bezier(0.34, 1.56, 0.64, 1);
+      cursor: pointer;
+      will-change: transform, opacity;
+      transform-origin: center center;
     }
-    .wheel-item-inner img {
+    .wheel-card .card-img {
       width: 100%;
       height: 100%;
       object-fit: cover;
       display: block;
       pointer-events: none;
     }
-    .wheel-item a {
+    .wheel-card .card-link {
       display: block;
       width: 100%;
       height: 100%;
       text-decoration: none;
     }
-    .wheel-item.active .wheel-item-inner {
-      box-shadow: 0 12px 40px rgba(0,0,0,0.25);
+    .wheel-card.pos-0 {
+      transform: translateX(0) scale(1) rotateY(0deg);
+      opacity: 1;
+      z-index: 10;
+      box-shadow: 0 18px 55px rgba(0,0,0,0.3);
     }
-    .wheel-item.active .wheel-item-inner::after {
+    .wheel-card.pos-0::after {
       content: '';
       position: absolute;
       inset: 0;
-      border-radius: 16px;
-      border: 3px solid rgba(255,255,255,0.6);
+      border-radius: 18px;
+      border: 3px solid rgba(255,255,255,0.75);
       pointer-events: none;
+      transition: border-color 0.3s;
     }
-    .wheel-hint {
+    .wheel-card.pos-0:hover::after {
+      border-color: rgba(255,255,255,1);
+    }
+    .wheel-card.pos--1 {
+      transform: translateX(-220px) scale(0.74) rotateY(30deg);
+      opacity: 0.68;
+      z-index: 5;
+    }
+    .wheel-card.pos-1 {
+      transform: translateX(220px) scale(0.74) rotateY(-30deg);
+      opacity: 0.68;
+      z-index: 5;
+    }
+    .wheel-card.pos--2 {
+      transform: translateX(-400px) scale(0.52) rotateY(45deg);
+      opacity: 0.35;
+      z-index: 2;
+    }
+    .wheel-card.pos-2 {
+      transform: translateX(400px) scale(0.52) rotateY(-45deg);
+      opacity: 0.35;
+      z-index: 2;
+    }
+    .wheel-card:not(.pos-0):hover {
+      opacity: 0.88;
+      filter: brightness(1.08);
+    }
+    .wheel-arc {
+      position: absolute;
+      bottom: 6%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 72%;
+      height: 55%;
+      border-bottom: 2px solid rgba(255,255,255,0.18);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 1;
+    }
+    .wheel-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: none;
+      background: rgba(255,255,255,0.12);
+      backdrop-filter: blur(8px);
+      color: #fff;
+      font-size: 16px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s, transform 0.2s;
+      z-index: 20;
+    }
+    .wheel-arrow:hover {
+      background: rgba(255,255,255,0.3);
+      transform: translateY(-50%) scale(1.08);
+    }
+    .wheel-prev { left: 18px; }
+    .wheel-next { right: 18px; }
+    .wheel-dots {
       position: absolute;
       bottom: 12px;
       left: 50%;
       transform: translateX(-50%);
+      display: flex;
+      gap: 8px;
+      z-index: 20;
+    }
+    .wheel-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.35);
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s;
+      padding: 0;
+    }
+    .wheel-dot.active {
+      background: #fff;
+      width: 24px;
+      border-radius: 4px;
+    }
+    .wheel-hint {
+      position: absolute;
+      bottom: 38px;
+      left: 50%;
+      transform: translateX(-50%);
       font-size: 12px;
-      color: rgba(255,255,255,0.7);
-      background: rgba(0,0,0,0.3);
-      padding: 4px 12px;
-      border-radius: 20px;
+      color: rgba(255,255,255,0.55);
       pointer-events: none;
       z-index: 20;
     }
     @media (max-width: 768px) {
-      .wheel-item {
-        width: 120px;
-        height: 164px;
-        margin-left: -60px;
-        margin-top: -82px;
+      .wheel-card {
+        width: 130px;
+        height: 174px;
+        margin-left: -65px;
+        margin-top: -87px;
       }
+      .wheel-card.pos--1 {
+        transform: translateX(-155px) scale(0.74) rotateY(30deg);
+      }
+      .wheel-card.pos-1 {
+        transform: translateX(155px) scale(0.74) rotateY(-30deg);
+      }
+      .wheel-card.pos--2 {
+        transform: translateX(-280px) scale(0.52) rotateY(45deg);
+      }
+      .wheel-card.pos-2 {
+        transform: translateX(280px) scale(0.52) rotateY(-45deg);
+      }
+      .wheel-arrow {
+        width: 36px;
+        height: 36px;
+        font-size: 13px;
+      }
+      .wheel-prev { left: 8px; }
+      .wheel-next { right: 8px; }
       .wheel-container {
-        height: 65%;
+        height: 72%;
       }
     }
   </style>
@@ -280,6 +392,7 @@
         });
 
         // 初始化所有轮盘组件
+        wheelInstances.forEach(w => w.destroy && w.destroy());
         wheelInstances.length = 0;
         document.querySelectorAll('.wheel-container[data-wheel]').forEach(container => {
           const idx = parseInt(container.dataset.wheel, 10);
@@ -295,7 +408,7 @@
           if (activeSlide) {
             const inst = wheelInstances.find(w => w.container === activeSlide);
             if (inst) {
-              requestAnimationFrame(() => inst.updatePositions());
+              requestAnimationFrame(() => inst.updateCards());
             }
           }
         });
@@ -320,7 +433,6 @@
     }
 
     function renderWheelSlide(b, idx) {
-      const items = Array.isArray(b.items) ? b.items : [];
       return `
         <div class="swiper-slide wheel-slide">
           <div class="slide-content">
@@ -334,18 +446,20 @@
               </div>
             </div>
             <div class="wheel-container" data-wheel="${idx}">
-              <div class="wheel-track">
-                ${items.map((item, i) => `
-                  <div class="wheel-item" data-index="${i}">
-                    <a href="${escapeHtml(item.link_url || '#')}" target="_blank" draggable="false">
-                      <div class="wheel-item-inner">
-                        <img src="${escapeHtml(item.image_url)}" alt="" draggable="false" loading="lazy">
-                      </div>
-                    </a>
-                  </div>
-                `).join('')}
+              <div class="wheel-viewport">
+                <div class="wheel-arc"></div>
+                <div class="wheel-track">
+                  <div class="wheel-card" data-pos="-2"><a class="card-link" href="#" draggable="false"><img class="card-img" src="" alt="" draggable="false" loading="lazy"></a></div>
+                  <div class="wheel-card" data-pos="-1"><a class="card-link" href="#" draggable="false"><img class="card-img" src="" alt="" draggable="false" loading="lazy"></a></div>
+                  <div class="wheel-card" data-pos="0"><a class="card-link" href="#" draggable="false"><img class="card-img" src="" alt="" draggable="false" loading="lazy"></a></div>
+                  <div class="wheel-card" data-pos="1"><a class="card-link" href="#" draggable="false"><img class="card-img" src="" alt="" draggable="false" loading="lazy"></a></div>
+                  <div class="wheel-card" data-pos="2"><a class="card-link" href="#" draggable="false"><img class="card-img" src="" alt="" draggable="false" loading="lazy"></a></div>
+                </div>
               </div>
-              <div class="wheel-hint">滚动鼠标旋转轮盘</div>
+              <button class="wheel-arrow wheel-prev" aria-label="上一张">&#10094;</button>
+              <button class="wheel-arrow wheel-next" aria-label="下一张">&#10095;</button>
+              <div class="wheel-dots"></div>
+              <div class="wheel-hint">滚动鼠标旋转轮盘 · 点击两侧切换</div>
             </div>
           </div>
         </div>
@@ -356,130 +470,185 @@
       constructor(container, items) {
         this.container = container;
         this.items = items;
-        this.angleOffset = 0;
-        this.itemElements = Array.from(container.querySelectorAll('.wheel-item'));
+        this.activeIndex = 0;
+        this.cardEls = Array.from(container.querySelectorAll('.wheel-card'));
+        this.dotsContainer = container.querySelector('.wheel-dots');
+        this.prevBtn = container.querySelector('.wheel-prev');
+        this.nextBtn = container.querySelector('.wheel-next');
         this.isDragging = false;
+        this.startX = 0;
         this.startY = 0;
-        this.startAngle = 0;
-        this._resizeHandler = () => this.updatePositions();
+        this.dragThreshold = 50;
+        this._resizeHandler = () => this.updateCards();
         this.init();
       }
 
       init() {
         window.addEventListener('resize', this._resizeHandler);
-        this.updatePositions();
+        this.renderDots();
+        this.updateCards();
+        this.bindEvents();
+      }
 
+      getItemIndex(offset) {
+        const count = this.items.length;
+        if (count === 0) return 0;
+        let idx = (this.activeIndex + offset) % count;
+        if (idx < 0) idx += count;
+        return idx;
+      }
+
+      renderDots() {
+        this.dotsContainer.innerHTML = '';
+        this.dotEls = [];
+        const count = this.items.length;
+        for (let i = 0; i < count; i++) {
+          const dot = document.createElement('button');
+          dot.className = 'wheel-dot';
+          dot.setAttribute('aria-label', `第 ${i + 1} 张`);
+          dot.addEventListener('click', () => {
+            this.activeIndex = i;
+            this.updateCards();
+          });
+          this.dotsContainer.appendChild(dot);
+          this.dotEls.push(dot);
+        }
+      }
+
+      updateCards() {
+        const count = this.items.length;
+        if (count === 0) return;
+
+        this.cardEls.forEach((card) => {
+          const offset = parseInt(card.dataset.pos, 10);
+          const itemIdx = this.getItemIndex(offset);
+          const item = this.items[itemIdx];
+
+          const img = card.querySelector('.card-img');
+          const link = card.querySelector('.card-link');
+
+          if (img && item && item.image_url) {
+            img.src = item.image_url;
+            img.style.display = 'block';
+          } else if (img) {
+            img.style.display = 'none';
+          }
+
+          if (link && item) {
+            link.href = item.link_url || '#';
+          }
+
+          // 更新位置类名
+          card.className = 'wheel-card';
+          card.classList.add(`pos-${offset}`);
+
+          // 点击事件：中间跳转，两侧切换到中心
+          card.onclick = (e) => {
+            if (offset === 0) {
+              if (!item || !item.link_url || item.link_url === '#') {
+                e.preventDefault();
+              }
+            } else {
+              e.preventDefault();
+              this.activeIndex = itemIdx;
+              this.updateCards();
+            }
+          };
+        });
+
+        // 更新分页点
+        this.dotEls.forEach((dot, i) => {
+          dot.classList.toggle('active', i === this.activeIndex);
+        });
+      }
+
+      next() {
+        const count = this.items.length;
+        if (count === 0) return;
+        this.activeIndex = (this.activeIndex + 1) % count;
+        this.updateCards();
+      }
+
+      prev() {
+        const count = this.items.length;
+        if (count === 0) return;
+        this.activeIndex = (this.activeIndex - 1 + count) % count;
+        this.updateCards();
+      }
+
+      bindEvents() {
         // 鼠标滚轮
         this.container.addEventListener('wheel', (e) => {
           e.preventDefault();
           e.stopPropagation();
-          this.angleOffset += e.deltaY * 0.004;
-          this.updatePositions();
+          if (e.deltaY > 0) this.next();
+          else this.prev();
         }, { passive: false });
 
-        // 触摸拖拽（移动端）
+        // 触摸拖拽
         this.container.addEventListener('touchstart', (e) => {
           this.isDragging = true;
+          this.startX = e.touches[0].clientX;
           this.startY = e.touches[0].clientY;
-          this.startAngle = this.angleOffset;
         }, { passive: true });
 
         this.container.addEventListener('touchmove', (e) => {
           if (!this.isDragging) return;
-          const deltaY = e.touches[0].clientY - this.startY;
-          this.angleOffset = this.startAngle + deltaY * 0.006;
-          this.updatePositions();
-        }, { passive: true });
+          e.preventDefault();
+        }, { passive: false });
 
-        this.container.addEventListener('touchend', () => {
+        this.container.addEventListener('touchend', (e) => {
+          if (!this.isDragging) return;
           this.isDragging = false;
+          const dx = e.changedTouches[0].clientX - this.startX;
+          const dy = e.changedTouches[0].clientY - this.startY;
+          if (Math.abs(dx) > Math.abs(dy)) {
+            if (dx < -this.dragThreshold) this.next();
+            else if (dx > this.dragThreshold) this.prev();
+          } else {
+            if (dy < -this.dragThreshold) this.next();
+            else if (dy > this.dragThreshold) this.prev();
+          }
         });
 
         // 鼠标拖拽
         this.container.addEventListener('mousedown', (e) => {
           this.isDragging = true;
+          this.startX = e.clientX;
           this.startY = e.clientY;
-          this.startAngle = this.angleOffset;
           this.container.style.cursor = 'grabbing';
         });
 
-        window.addEventListener('mousemove', (e) => {
+        const onMouseUp = (e) => {
           if (!this.isDragging) return;
-          const deltaY = e.clientY - this.startY;
-          this.angleOffset = this.startAngle + deltaY * 0.006;
-          this.updatePositions();
-        });
-
-        window.addEventListener('mouseup', () => {
-          if (this.isDragging) {
-            this.isDragging = false;
-            this.container.style.cursor = 'default';
+          this.isDragging = false;
+          this.container.style.cursor = 'default';
+          const dx = e.clientX - this.startX;
+          const dy = e.clientY - this.startY;
+          if (Math.abs(dx) > Math.abs(dy)) {
+            if (dx < -this.dragThreshold) this.next();
+            else if (dx > this.dragThreshold) this.prev();
+          } else {
+            if (dy < -this.dragThreshold) this.next();
+            else if (dy > this.dragThreshold) this.prev();
           }
+        };
+
+        window.addEventListener('mouseup', onMouseUp);
+
+        // 箭头按钮
+        this.prevBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          this.prev();
+        });
+        this.nextBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          this.next();
         });
       }
 
-      updatePositions() {
-        const count = this.items.length;
-        if (count === 0) return;
-
-        const rect = this.container.getBoundingClientRect();
-        const centerX = rect.width / 2;
-        const centerY = rect.height * 0.85;
-        const radiusX = Math.min(rect.width * 0.38, 420);
-        const radiusY = Math.min(rect.height * 0.35, 160);
-
-        const itemWidth = rect.width <= 768 ? 120 : 170;
-        const itemHeight = rect.width <= 768 ? 164 : 230;
-
-        this.itemElements.forEach((el, i) => {
-          const baseAngle = (i / count) * Math.PI * 2;
-          const angle = baseAngle + this.angleOffset;
-
-          // 归一化到 [0, 2π]
-          let normAngle = angle % (Math.PI * 2);
-          if (normAngle < 0) normAngle += Math.PI * 2;
-
-          // 相对于底部中心的角度 (底部中心 = π/2)
-          let relAngle = normAngle - Math.PI / 2;
-          while (relAngle > Math.PI) relAngle -= Math.PI * 2;
-          while (relAngle < -Math.PI) relAngle += Math.PI * 2;
-
-          const absAngle = Math.abs(relAngle);
-
-          // 椭圆位置
-          const x = centerX + radiusX * Math.sin(normAngle);
-          const y = centerY - radiusY * Math.cos(normAngle);
-
-          // 缩放和透明度：中心最大，两侧渐小
-          const scale = Math.max(0.55, 1 - absAngle * 0.35);
-          const opacity = absAngle > Math.PI / 2 ? 0 : Math.max(0.35, 1 - absAngle * 0.7);
-
-          // 旋转：根据水平位置倾斜
-          const rotate = Math.sin(normAngle) * 18;
-
-          // z-index：中心在最前
-          const zIndex = Math.round(100 - absAngle * 40);
-
-          // 判断是否为中心项（可点击）
-          const isCenter = absAngle < 0.25;
-
-          el.style.left = `${x - itemWidth / 2}px`;
-          el.style.top = `${y - itemHeight / 2}px`;
-          el.style.transform = `rotate(${rotate}deg) scale(${scale})`;
-          el.style.opacity = opacity;
-          el.style.zIndex = zIndex;
-          el.style.visibility = opacity <= 0.01 ? 'hidden' : 'visible';
-
-          if (isCenter) {
-            el.classList.add('active');
-            const link = el.querySelector('a');
-            if (link) link.style.pointerEvents = 'auto';
-          } else {
-            el.classList.remove('active');
-            const link = el.querySelector('a');
-            if (link) link.style.pointerEvents = 'none';
-          }
-        });
+      destroy() {
+        window.removeEventListener('resize', this._resizeHandler);
       }
     }
 
