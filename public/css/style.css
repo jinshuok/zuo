@@ -80,6 +80,9 @@ main { flex: 1; }
 .swiper-slide {
   background: #fff;
 }
+.wheel-slide.swiper-slide {
+  background: transparent;
+}
 
 .slide-content {
   display: flex;

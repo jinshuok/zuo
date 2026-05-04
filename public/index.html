@@ -78,7 +78,7 @@
       bottom: 0;
       left: 0;
       right: 0;
-      height: 80%;
+      height: 100%;
       overflow: hidden;
       user-select: none;
     }
@@ -412,11 +412,6 @@
       return `
         <div class="swiper-slide wheel-slide">
           <div class="slide-content">
-            <div class="wheel-bg" style="background-image:url('${escapeHtml(b.image_url)}')"></div>
-            <div class="slide-text" style="position:relative;z-index:5;">
-              <h1 class="slide-title">${escapeHtml(b.title)}</h1>
-              ${b.subtitle ? `<p class="slide-subtitle">${escapeHtml(b.subtitle)}</p>` : ''}
-            </div>
             <div class="wheel-container" data-wheel="${idx}">
               <div class="wheel-viewport">
                 <div class="wheel-arc"></div>
