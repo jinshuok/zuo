@@ -1,17 +1,28 @@
 // JWT 认证中间件
 
+// 辅助：将 URL-safe Base64 解码为字符串
+function base64UrlDecode(b64) {
+    b64 = b64.replace(/-/g, '+').replace(/_/g, '/');
+    while (b64.length % 4) b64 += '=';
+    return atob(b64);
+}
+
 // 验证 JWT Token
 async function verifyToken(token, secret) {
     try {
         const [headerB64, payloadB64, signatureB64] = token.split('.');
-        if (!headerB64 || !payloadB64 || !signatureB64) return null;
-        
-        const payload = JSON.parse(atob(payloadB64));
-        
-        if (payload.exp && payload.exp < Date.now() / 1000) {
+        if (!headerB64 || !payloadB64 || !signatureB64) {
+            console.error('verifyToken: token format invalid');
             return null;
         }
-        
+
+        const payload = JSON.parse(base64UrlDecode(payloadB64));
+
+        if (payload.exp && payload.exp < Date.now() / 1000) {
+            console.error('verifyToken: token expired, exp=', payload.exp, 'now=', Date.now() / 1000);
+            return null;
+        }
+
         // 使用 Web Crypto API 验证签名
         const encoder = new TextEncoder();
         const key = await crypto.subtle.importKey(
@@ -21,14 +32,18 @@ async function verifyToken(token, secret) {
             false,
             ['verify']
         );
-        const signature = Uint8Array.from(atob(signatureB64.replace(/-/g, '+').replace(/_/g, '/')), c => c.charCodeAt(0));
+        const signature = Uint8Array.from(base64UrlDecode(signatureB64), c => c.charCodeAt(0));
         const valid = await crypto.subtle.verify(
             'HMAC', key, signature,
             encoder.encode(`${headerB64}.${payloadB64}`)
         );
-        
+
+        if (!valid) {
+            console.error('verifyToken: signature invalid');
+        }
         return valid ? payload : null;
     } catch (e) {
+        console.error('verifyToken error:', e.message);
         return null;
     }
 }
