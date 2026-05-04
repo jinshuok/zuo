@@ -12,7 +12,6 @@ export async function onRequestPost(context) {
             return jsonResponse({ error: '请输入标题并上传图片' }, 400);
         }
         
-        const bannerType = type || 'standard';
         const itemsJson = Array.isArray(items) ? JSON.stringify(items) : '[]';
         
         const result = await env.DB.prepare(
