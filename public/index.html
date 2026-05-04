@@ -78,8 +78,8 @@
       bottom: 0;
       left: 0;
       right: 0;
-      height: 78%;
-      overflow: visible;
+      height: 80%;
+      overflow: hidden;
       user-select: none;
     }
     .wheel-viewport {
@@ -88,7 +88,7 @@
       height: 100%;
       perspective: 1200px;
       display: flex;
-      align-items: center;
+      align-items: flex-end;
       justify-content: center;
     }
     .wheel-track {
@@ -96,23 +96,23 @@
       width: 0;
       height: 0;
       transform-style: preserve-3d;
+      margin-bottom: 14%;
     }
     .wheel-card {
       position: absolute;
-      width: 190px;
-      height: 250px;
+      width: 170px;
+      height: 220px;
       left: 50%;
-      top: 50%;
-      margin-left: -95px;
-      margin-top: -125px;
-      border-radius: 18px;
+      bottom: 0;
+      margin-left: -85px;
+      border-radius: 16px;
       overflow: hidden;
       background: linear-gradient(180deg, rgba(255,255,255,0.95) 0%, rgba(245,245,255,0.92) 100%);
       box-shadow: 0 10px 40px rgba(0,0,0,0.2);
       transition: all 0.55s cubic-bezier(0.34, 1.56, 0.64, 1);
       cursor: pointer;
       will-change: transform, opacity;
-      transform-origin: center center;
+      transform-origin: bottom center;
     }
     .wheel-card .card-img {
       width: 100%;
@@ -127,8 +127,26 @@
       height: 100%;
       text-decoration: none;
     }
+    .wheel-card .card-btn {
+      position: absolute;
+      bottom: -42px;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 6px 18px;
+      background: rgba(255,255,255,0.92);
+      color: #181E25;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 500;
+      text-decoration: none;
+      white-space: nowrap;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      pointer-events: none;
+    }
     .wheel-card.pos-0 {
-      transform: translateX(0) scale(1) rotateY(0deg);
+      transform: translateX(0) translateY(-45px) scale(1.14) rotate(0deg);
       opacity: 1;
       z-index: 10;
       box-shadow: 0 18px 55px rgba(0,0,0,0.3);
@@ -137,7 +155,7 @@
       content: '';
       position: absolute;
       inset: 0;
-      border-radius: 18px;
+      border-radius: 16px;
       border: 3px solid rgba(255,255,255,0.75);
       pointer-events: none;
       transition: border-color 0.3s;
@@ -145,24 +163,36 @@
     .wheel-card.pos-0:hover::after {
       border-color: rgba(255,255,255,1);
     }
+    .wheel-card.pos-0 .card-btn {
+      opacity: 1;
+      pointer-events: auto;
+    }
     .wheel-card.pos--1 {
-      transform: translateX(-220px) scale(0.74) rotateY(30deg);
+      transform: translateX(-185px) translateY(10px) scale(0.85) rotate(-16deg);
       opacity: 0.68;
       z-index: 5;
+    }
+    .wheel-card.pos--1 .card-btn {
+      opacity: 0.45;
+      pointer-events: auto;
     }
     .wheel-card.pos-1 {
-      transform: translateX(220px) scale(0.74) rotateY(-30deg);
+      transform: translateX(185px) translateY(10px) scale(0.85) rotate(16deg);
       opacity: 0.68;
       z-index: 5;
     }
+    .wheel-card.pos-1 .card-btn {
+      opacity: 0.45;
+      pointer-events: auto;
+    }
     .wheel-card.pos--2 {
-      transform: translateX(-400px) scale(0.52) rotateY(45deg);
-      opacity: 0.35;
+      transform: translateX(-340px) translateY(65px) scale(0.64) rotate(-30deg);
+      opacity: 0.32;
       z-index: 2;
     }
     .wheel-card.pos-2 {
-      transform: translateX(400px) scale(0.52) rotateY(-45deg);
-      opacity: 0.35;
+      transform: translateX(340px) translateY(65px) scale(0.64) rotate(30deg);
+      opacity: 0.32;
       z-index: 2;
     }
     .wheel-card:not(.pos-0):hover {
@@ -171,103 +201,49 @@
     }
     .wheel-arc {
       position: absolute;
-      bottom: 6%;
+      bottom: 4%;
       left: 50%;
       transform: translateX(-50%);
-      width: 72%;
-      height: 55%;
-      border-bottom: 2px solid rgba(255,255,255,0.18);
+      width: 68%;
+      height: 50%;
+      border-bottom: 2px solid rgba(255,255,255,0.16);
       border-radius: 50%;
       pointer-events: none;
       z-index: 1;
     }
-    .wheel-arrow {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 44px;
-      height: 44px;
-      border-radius: 50%;
-      border: none;
-      background: rgba(255,255,255,0.12);
-      backdrop-filter: blur(8px);
-      color: #fff;
-      font-size: 16px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: background 0.2s, transform 0.2s;
-      z-index: 20;
-    }
-    .wheel-arrow:hover {
-      background: rgba(255,255,255,0.3);
-      transform: translateY(-50%) scale(1.08);
-    }
-    .wheel-prev { left: 18px; }
-    .wheel-next { right: 18px; }
-    .wheel-dots {
-      position: absolute;
-      bottom: 12px;
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      gap: 8px;
-      z-index: 20;
-    }
-    .wheel-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.35);
-      border: none;
-      cursor: pointer;
-      transition: all 0.3s;
-      padding: 0;
-    }
-    .wheel-dot.active {
-      background: #fff;
-      width: 24px;
-      border-radius: 4px;
-    }
     .wheel-hint {
       position: absolute;
-      bottom: 38px;
+      bottom: 10px;
       left: 50%;
       transform: translateX(-50%);
       font-size: 12px;
-      color: rgba(255,255,255,0.55);
+      color: rgba(255,255,255,0.5);
       pointer-events: none;
       z-index: 20;
     }
     @media (max-width: 768px) {
       .wheel-card {
-        width: 130px;
-        height: 174px;
-        margin-left: -65px;
-        margin-top: -87px;
+        width: 120px;
+        height: 160px;
+        margin-left: -60px;
+      }
+      .wheel-card.pos-0 {
+        transform: translateX(0) translateY(-35px) scale(1.12) rotate(0deg);
       }
       .wheel-card.pos--1 {
-        transform: translateX(-155px) scale(0.74) rotateY(30deg);
+        transform: translateX(-130px) translateY(8px) scale(0.83) rotate(-16deg);
       }
       .wheel-card.pos-1 {
-        transform: translateX(155px) scale(0.74) rotateY(-30deg);
+        transform: translateX(130px) translateY(8px) scale(0.83) rotate(16deg);
       }
       .wheel-card.pos--2 {
-        transform: translateX(-280px) scale(0.52) rotateY(45deg);
+        transform: translateX(-240px) translateY(50px) scale(0.62) rotate(-30deg);
       }
       .wheel-card.pos-2 {
-        transform: translateX(280px) scale(0.52) rotateY(-45deg);
+        transform: translateX(240px) translateY(50px) scale(0.62) rotate(30deg);
       }
-      .wheel-arrow {
-        width: 36px;
-        height: 36px;
-        font-size: 13px;
-      }
-      .wheel-prev { left: 8px; }
-      .wheel-next { right: 8px; }
       .wheel-container {
-        height: 72%;
+        height: 76%;
       }
     }
   </style>
@@ -440,25 +416,18 @@
             <div class="slide-text" style="position:relative;z-index:5;">
               <h1 class="slide-title">${escapeHtml(b.title)}</h1>
               ${b.subtitle ? `<p class="slide-subtitle">${escapeHtml(b.subtitle)}</p>` : ''}
-              <div class="slide-buttons">
-                ${b.btn_link ? `<a href="${escapeHtml(b.btn_link)}" class="btn btn-primary">${escapeHtml(b.btn_text || '了解更多')}</a>` : ''}
-                ${b.link_url ? `<a href="${escapeHtml(b.link_url)}" class="btn btn-secondary">查看详情</a>` : ''}
-              </div>
             </div>
             <div class="wheel-container" data-wheel="${idx}">
               <div class="wheel-viewport">
                 <div class="wheel-arc"></div>
                 <div class="wheel-track">
-                  <div class="wheel-card" data-pos="-2"><a class="card-link" href="#" draggable="false"><img class="card-img" src="" alt="" draggable="false" loading="lazy"></a></div>
-                  <div class="wheel-card" data-pos="-1"><a class="card-link" href="#" draggable="false"><img class="card-img" src="" alt="" draggable="false" loading="lazy"></a></div>
-                  <div class="wheel-card" data-pos="0"><a class="card-link" href="#" draggable="false"><img class="card-img" src="" alt="" draggable="false" loading="lazy"></a></div>
-                  <div class="wheel-card" data-pos="1"><a class="card-link" href="#" draggable="false"><img class="card-img" src="" alt="" draggable="false" loading="lazy"></a></div>
-                  <div class="wheel-card" data-pos="2"><a class="card-link" href="#" draggable="false"><img class="card-img" src="" alt="" draggable="false" loading="lazy"></a></div>
+                  <div class="wheel-card" data-pos="-2"><a class="card-link" href="#" draggable="false"><img class="card-img" src="" alt="" draggable="false" loading="lazy"></a><a class="card-btn" href="#" target="_blank"></a></div>
+                  <div class="wheel-card" data-pos="-1"><a class="card-link" href="#" draggable="false"><img class="card-img" src="" alt="" draggable="false" loading="lazy"></a><a class="card-btn" href="#" target="_blank"></a></div>
+                  <div class="wheel-card" data-pos="0"><a class="card-link" href="#" draggable="false"><img class="card-img" src="" alt="" draggable="false" loading="lazy"></a><a class="card-btn" href="#" target="_blank"></a></div>
+                  <div class="wheel-card" data-pos="1"><a class="card-link" href="#" draggable="false"><img class="card-img" src="" alt="" draggable="false" loading="lazy"></a><a class="card-btn" href="#" target="_blank"></a></div>
+                  <div class="wheel-card" data-pos="2"><a class="card-link" href="#" draggable="false"><img class="card-img" src="" alt="" draggable="false" loading="lazy"></a><a class="card-btn" href="#" target="_blank"></a></div>
                 </div>
               </div>
-              <button class="wheel-arrow wheel-prev" aria-label="上一张">&#10094;</button>
-              <button class="wheel-arrow wheel-next" aria-label="下一张">&#10095;</button>
-              <div class="wheel-dots"></div>
               <div class="wheel-hint">滚动鼠标旋转轮盘 · 点击两侧切换</div>
             </div>
           </div>
@@ -472,9 +441,6 @@
         this.items = items;
         this.activeIndex = 0;
         this.cardEls = Array.from(container.querySelectorAll('.wheel-card'));
-        this.dotsContainer = container.querySelector('.wheel-dots');
-        this.prevBtn = container.querySelector('.wheel-prev');
-        this.nextBtn = container.querySelector('.wheel-next');
         this.isDragging = false;
         this.startX = 0;
         this.startY = 0;
@@ -485,7 +451,6 @@
 
       init() {
         window.addEventListener('resize', this._resizeHandler);
-        this.renderDots();
         this.updateCards();
         this.bindEvents();
       }
@@ -498,23 +463,6 @@
         return idx;
       }
 
-      renderDots() {
-        this.dotsContainer.innerHTML = '';
-        this.dotEls = [];
-        const count = this.items.length;
-        for (let i = 0; i < count; i++) {
-          const dot = document.createElement('button');
-          dot.className = 'wheel-dot';
-          dot.setAttribute('aria-label', `第 ${i + 1} 张`);
-          dot.addEventListener('click', () => {
-            this.activeIndex = i;
-            this.updateCards();
-          });
-          this.dotsContainer.appendChild(dot);
-          this.dotEls.push(dot);
-        }
-      }
-
       updateCards() {
         const count = this.items.length;
         if (count === 0) return;
@@ -525,7 +473,8 @@
           const item = this.items[itemIdx];
 
           const img = card.querySelector('.card-img');
-          const link = card.querySelector('.card-link');
+          const imgLink = card.querySelector('.card-link');
+          const btn = card.querySelector('.card-btn');
 
           if (img && item && item.image_url) {
             img.src = item.image_url;
@@ -534,8 +483,18 @@
             img.style.display = 'none';
           }
 
-          if (link && item) {
-            link.href = item.link_url || '#';
+          if (imgLink && item) {
+            imgLink.href = item.link_url || '#';
+          }
+
+          if (btn) {
+            if (item && item.btn_text) {
+              btn.textContent = item.btn_text;
+              btn.href = item.btn_link || item.link_url || '#';
+              btn.style.display = 'block';
+            } else {
+              btn.style.display = 'none';
+            }
           }
 
           // 更新位置类名
@@ -545,20 +504,16 @@
           // 点击事件：中间跳转，两侧切换到中心
           card.onclick = (e) => {
             if (offset === 0) {
-              if (!item || !item.link_url || item.link_url === '#') {
+              if (!item || (!item.link_url && !item.btn_link) || (item.link_url === '#' && item.btn_link === '#')) {
                 e.preventDefault();
               }
             } else {
               e.preventDefault();
+              e.stopPropagation();
               this.activeIndex = itemIdx;
               this.updateCards();
             }
           };
-        });
-
-        // 更新分页点
-        this.dotEls.forEach((dot, i) => {
-          dot.classList.toggle('active', i === this.activeIndex);
         });
       }
 
@@ -635,16 +590,6 @@
         };
 
         window.addEventListener('mouseup', onMouseUp);
-
-        // 箭头按钮
-        this.prevBtn.addEventListener('click', (e) => {
-          e.stopPropagation();
-          this.prev();
-        });
-        this.nextBtn.addEventListener('click', (e) => {
-          e.stopPropagation();
-          this.next();
-        });
       }
 
       destroy() {

@@ -306,7 +306,7 @@
           </div>
           <input type="hidden" id="bImage" required>
         </div>
-        <div class="form-row">
+        <div class="form-row" id="globalBtnRow">
           <div class="form-group">
             <label class="form-label">按钮文字</label>
             <input type="text" id="bBtnText" class="form-input" value="了解更多">
@@ -316,7 +316,7 @@
             <input type="url" id="bBtnLink" class="form-input" placeholder="https://">
           </div>
         </div>
-        <div class="form-group">
+        <div class="form-group" id="globalLinkGroup">
           <label class="form-label">详情链接</label>
           <input type="url" id="bLink" class="form-input" placeholder="https://">
         </div>
@@ -628,7 +628,7 @@
       // 轮盘图片处理
       clearWheelItems();
       const items = Array.isArray(banner.items) ? banner.items : [];
-      items.forEach(item => addWheelItem(item.image_url, item.link_url));
+      items.forEach(item => addWheelItem(item.image_url, item.link_url, item.btn_text, item.btn_link));
       onBannerTypeChange();
       document.getElementById('bannerModal').classList.add('active');
     }
@@ -684,14 +684,17 @@
     function onBannerTypeChange() {
       const type = document.getElementById('bType').value;
       const section = document.getElementById('wheelItemsSection');
-      if (type === 'wheel') {
-        section.style.display = 'block';
-        if (document.getElementById('wheelItemsList').children.length === 0) {
-          addWheelItem();
-          addWheelItem();
-        }
-      } else {
-        section.style.display = 'none';
+      const isWheel = type === 'wheel';
+      section.style.display = isWheel ? 'block' : 'none';
+      // 轮盘类型时隐藏全局大图和全局按钮字段
+      document.getElementById('bannerUploader').style.display = isWheel ? 'none' : 'block';
+      document.getElementById('globalBtnRow').style.display = isWheel ? 'none' : 'flex';
+      document.getElementById('globalLinkGroup').style.display = isWheel ? 'none' : 'block';
+      // 图片字段的 required 也切换
+      document.getElementById('bImage').required = !isWheel;
+      if (isWheel && document.getElementById('wheelItemsList').children.length === 0) {
+        addWheelItem();
+        addWheelItem();
       }
     }
 
@@ -700,7 +703,7 @@
       wheelItemCounter = 0;
     }
 
-    function addWheelItem(imageUrl, linkUrl) {
+    function addWheelItem(imageUrl, linkUrl, btnText, btnLink) {
       wheelItemCounter++;
       const id = wheelItemCounter;
       const list = document.getElementById('wheelItemsList');
@@ -721,6 +724,14 @@
         <div class="form-row" style="margin-top:8px;">
           <div class="form-group" style="margin-bottom:0;">
             <input type="url" id="wLink_${id}" class="form-input" placeholder="链接 https://" value="${linkUrl || ''}">
+          </div>
+        </div>
+        <div class="form-row" style="margin-top:8px;">
+          <div class="form-group" style="margin-bottom:0;flex:1;">
+            <input type="text" id="wBtnText_${id}" class="form-input" placeholder="按钮文字" value="${btnText || ''}">
+          </div>
+          <div class="form-group" style="margin-bottom:0;flex:1;">
+            <input type="url" id="wBtnLink_${id}" class="form-input" placeholder="按钮链接 https://" value="${btnLink || ''}">
           </div>
         </div>
       `;
@@ -761,8 +772,10 @@
         const id = row.dataset.wheelId;
         const imageUrl = document.getElementById('wImage_' + id).value;
         const linkUrl = document.getElementById('wLink_' + id).value;
+        const btnText = document.getElementById('wBtnText_' + id).value;
+        const btnLink = document.getElementById('wBtnLink_' + id).value;
         if (imageUrl) {
-          items.push({ image_url: imageUrl, link_url: linkUrl });
+          items.push({ image_url: imageUrl, link_url: linkUrl, btn_text: btnText, btn_link: btnLink });
         }
       });
       return items;
