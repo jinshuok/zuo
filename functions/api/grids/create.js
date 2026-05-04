@@ -8,7 +8,7 @@ export async function onRequestPost(context) {
         const { title, image_url, link_url, sort_order } = await request.json();
         
         if (!title || !image_url) {
-            return jsonResponse({ error: 'Title and image_url are required' }, 400);
+            return jsonResponse({ error: '请输入标题并上传图片' }, 400);
         }
         
         const result = await env.DB.prepare(
@@ -28,6 +28,6 @@ export async function onRequestPost(context) {
         
     } catch (error) {
         console.error('Create grid error:', error);
-        return jsonResponse({ error: 'Failed to create grid' }, 500);
+        return jsonResponse({ error: '创建九宫格失败，请稍后再试' }, 500);
     }
 }

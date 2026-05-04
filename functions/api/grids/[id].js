@@ -26,7 +26,7 @@ export async function onRequestPut(context) {
         
     } catch (error) {
         console.error('Update grid error:', error);
-        return jsonResponse({ error: 'Failed to update grid' }, 500);
+        return jsonResponse({ error: '更新九宫格失败，请稍后再试' }, 500);
     }
 }
 
@@ -40,6 +40,6 @@ export async function onRequestDelete(context) {
         
     } catch (error) {
         console.error('Delete grid error:', error);
-        return jsonResponse({ error: 'Failed to delete grid' }, 500);
+        return jsonResponse({ error: '删除九宫格失败，请稍后再试' }, 500);
     }
 }

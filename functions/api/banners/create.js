@@ -7,8 +7,9 @@ export async function onRequestPost(context) {
     try {
         const { title, subtitle, image_url, link_url, btn_text, btn_link, sort_order, type, items } = await request.json();
         
-        if (!title || !image_url) {
-            return jsonResponse({ error: 'Title and image_url are required' }, 400);
+        const bannerType = type || 'standard';
+        if (!title || (bannerType !== 'wheel' && !image_url)) {
+            return jsonResponse({ error: '请输入标题并上传图片' }, 400);
         }
         
         const bannerType = type || 'standard';
@@ -36,6 +37,6 @@ export async function onRequestPost(context) {
         
     } catch (error) {
         console.error('Create banner error:', error);
-        return jsonResponse({ error: error.message || 'Failed to create banner' }, 500);
+        return jsonResponse({ error: error.message || '创建轮播图失败，请稍后再试' }, 500);
     }
 }

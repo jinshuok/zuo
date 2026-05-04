@@ -37,6 +37,14 @@ CREATE TABLE IF NOT EXISTS grids (
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
+-- 素材表
+CREATE TABLE IF NOT EXISTS assets (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT,
+    image_url TEXT NOT NULL,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
 -- 插入默认管理员账号 (admin / admin123)
 INSERT OR IGNORE INTO admins (username, password_hash) VALUES (
     'admin',

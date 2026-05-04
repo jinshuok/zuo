@@ -52,6 +52,6 @@ export async function onRequestGet(context) {
         
     } catch (error) {
         console.error('List banners error:', error);
-        return jsonResponse({ error: 'Failed to fetch banners' }, 500);
+        return jsonResponse({ error: '获取轮播图列表失败，请稍后再试' }, 500);
     }
 }

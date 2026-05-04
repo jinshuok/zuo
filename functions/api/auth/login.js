@@ -8,7 +8,7 @@ export async function onRequestPost(context) {
         const { username, password } = await request.json();
         
         if (!username || !password) {
-            return jsonResponse({ error: 'Username and password required' }, 400);
+            return jsonResponse({ error: '请输入用户名和密码' }, 400);
         }
         
         // 查找管理员
@@ -17,7 +17,7 @@ export async function onRequestPost(context) {
         ).bind(username).first();
         
         if (!admin) {
-            return jsonResponse({ error: 'Invalid credentials' }, 401);
+            return jsonResponse({ error: '用户名或密码错误' }, 401);
         }
         
         // 验证密码 (SHA-256)
@@ -29,7 +29,7 @@ export async function onRequestPost(context) {
             .join('');
         
         if (passwordHash !== admin.password_hash) {
-            return jsonResponse({ error: 'Invalid credentials' }, 401);
+            return jsonResponse({ error: '用户名或密码错误' }, 401);
         }
         
         // 生成 Token
@@ -43,6 +43,6 @@ export async function onRequestPost(context) {
         
     } catch (error) {
         console.error('Login error:', error);
-        return jsonResponse({ error: 'Login failed' }, 500);
+        return jsonResponse({ error: '登录失败，请稍后再试' }, 500);
     }
 }

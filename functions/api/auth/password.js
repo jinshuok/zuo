@@ -6,18 +6,18 @@ export async function onRequestPut(context) {
     const user = context.data?.user;
     
     if (!user) {
-        return jsonResponse({ error: 'Unauthorized' }, 401);
+        return jsonResponse({ error: '请先登录' }, 401);
     }
     
     try {
         const { oldPassword, newPassword } = await request.json();
         
         if (!oldPassword || !newPassword) {
-            return jsonResponse({ error: 'Old and new password required' }, 400);
+            return jsonResponse({ error: '请输入旧密码和新密码' }, 400);
         }
         
         if (newPassword.length < 6) {
-            return jsonResponse({ error: 'New password must be at least 6 characters' }, 400);
+            return jsonResponse({ error: '新密码至少需要6位' }, 400);
         }
         
         // 查找当前管理员
@@ -26,7 +26,7 @@ export async function onRequestPut(context) {
         ).bind(user.userId).first();
         
         if (!admin) {
-            return jsonResponse({ error: 'User not found' }, 404);
+            return jsonResponse({ error: '用户不存在' }, 404);
         }
         
         // 验证旧密码
@@ -38,7 +38,7 @@ export async function onRequestPut(context) {
             .join('');
         
         if (oldPasswordHash !== admin.password_hash) {
-            return jsonResponse({ error: 'Old password is incorrect' }, 401);
+            return jsonResponse({ error: '旧密码不正确' }, 401);
         }
         
         // 更新为新密码
@@ -56,6 +56,6 @@ export async function onRequestPut(context) {
         
     } catch (error) {
         console.error('Password update error:', error);
-        return jsonResponse({ error: 'Failed to update password' }, 500);
+        return jsonResponse({ error: '密码修改失败，请稍后再试' }, 500);
     }
 }

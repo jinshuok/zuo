@@ -114,14 +114,14 @@ export async function onRequest(context) {
     // 验证 Token
     const authHeader = request.headers.get('Authorization');
     if (!authHeader || !authHeader.startsWith('Bearer ')) {
-        return jsonResponse({ error: 'Unauthorized' }, 401);
+        return jsonResponse({ error: '请先登录' }, 401);
     }
     
     const token = authHeader.slice(7);
     const payload = await verifyToken(token, env.JWT_SECRET);
     
     if (!payload) {
-        return jsonResponse({ error: 'Invalid token' }, 401);
+        return jsonResponse({ error: '登录已过期，请重新登录' }, 401);
     }
     
     context.data = { user: payload };
